@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <%- include ('../partials/header.ejs') %>
+</head>
+
+<body>
+  <!-- Sidebar de opciones  -->
+  <div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar" class="active">
+      <div class="custom-menu">
+        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+          <i class=" fa fa-bars"></i>
+          <span class="sr-only">Menu</span>
+        </button>
+      </div>
+      <div class="p-4">
+        <h3><a href="" class="logo">Aplicación Web de Graduados</a></h3>
+        <ul class="list-unstyled components mb-5">
+          <li class="active">
+            <a href="#"><span class="fa fa-home mr-3"></span> Inicio</a>
+          </li>
+          <!-- Visualizacion de opción agregar egresados solo para ADMIN-->
+          <% if (user.rol_id===1){%>
+            <li>
+              <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="margin-bottom: 20px;">
+                Agregar Rgresado
+              </a>
+            </li>
+            <li>
+              <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#borrarEgresadoModal" style="margin-bottom: 20px;">
+                Borrar Egresado
+              </a>
+            </li>
+            <li>
+              <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#actualizarEgrasadoModal" style="margin-bottom: 20px;">
+                Actualizar Egresado
+              </a>
+            </li>
+            <li>
+              <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#buscarEgrasadoModal" style="margin-bottom: 20px;">
+                Filtrar Egresado
+              </a>
+            </li>
+            <li>
+              <a href="#" id="exportar-btn" class="btn btn-primary">
+                Exportar Datos a CSV
+              </a>
+            </li>
+            <% } %>
+        </ul>
+
+        <div class="mb-5">
+          <a type="button" class="px-3 btn btn-secondary m-2" href="logout">Salir</a>
+        </div>
+
+        <div class="footer">
+          <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;
+            <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with
+            <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com"
+              target="_blank">Colorlib.com</a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+          </p>
+        </div>
+
+      </div>
+    </nav>
+
+    <!-- Contenido de Cabecera  -->
+    <div id="content" class="p-4 p-md-5 pt-5">
+      <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <h3>Bienvenido: 
+                <% if (user) { %>
+                  <span class="badge" style="background-color: #3BD10B;">
+                    <%= user.name %>
+                  </span>
+                <% } %> 
+              </h3>
+            </div>
+            <% if (user.rol_id===1) { %> 
+              <div class="col">
+                <h3>Búsqueda de Graduados: </h3>
+                <input id="egresado_buscar" name="egresado_buscar" type="text" class="form-control"
+                  placeholder="Ingresa el correo del Graduado">
+              </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contenido Principal -->
+      <% if (user.rol_id===1) { form_tittle = 'Agregar un Egresado'; %>
+        <!-- Renderizar el Mapa -->
+        <div id="map"></div>
+        <!-- Renderizar el formulario como un modal -->
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+          aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Nuevo Egresado</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <%- include ('../partials/egresadoform.ejs') %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="actualizarEgrasadoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+          aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Actualizar Egresado</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <%- include ('../partials/actualizaregresadoform.ejs') %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="buscarEgrasadoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+          aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Filtrar Egresado</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <%- include ('../partials/egresadobuscar.ejs') %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="borrarEgresadoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+          aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Borrar Graduado</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <%- include ('../partials/egresadoborrar.ejs') %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% } else if (user.rol_id===2) { form_tittle = 'Agregar mis datos';%>
+      <!-- Renderizar el formulario como un contenedor -->
+        <%- include ('../partials/egresadoform.ejs') %>
+      <% } %>
+      
+    </div>
+  </div>
+
+
+  <%- include ('../partials/scriptsimports.ejs') %>
+
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <% if(alert) { %>
+    <script>
+      Swal.fire({
+        title: '<%= alertTitle %>',
+        text: '<%= alertMessage %>',
+        icon: '<%= alertIcon %>',
+        showConfirmButton: <%= showConfirmButton %>,
+        timer: <%= timer %>
+      }).then(() => {
+        window.location = '/<%= ruta %>'
+      })
+    </script>
+  <% } %>
+  <% if(customAlert) { %>
+    <script>
+      Swal.fire({
+        title: '<%= custom.alertTitle %>',
+        text: '<%= custom.alertMessage %>',
+        icon: '<%= custom.alertIcon %>',
+        showConfirmButton: <%= custom.showConfirmButton %>,
+        timer: <%= custom.timer %>
+      }).then(() => {
+        window.location = '/<%= custom.ruta %>'
+      })
+    </script>
+  <% } %>
+
+</body>
+</html>

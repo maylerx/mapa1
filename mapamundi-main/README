@@ -1,0 +1,9 @@
+# Ejecutar el script ddl en MySQL para la creacion de la DB
+
+# Instalar los modulos (dentro de webapp)
+npm i
+
+# Correr la app (dentro de webapp)
+node app
+
+# Para ingresar como admin ingresar en user: "admin" , password: "admin"
