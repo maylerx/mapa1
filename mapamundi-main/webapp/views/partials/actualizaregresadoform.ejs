@@ -1,37 +1,56 @@
 <div class="card">
     <div class="card-header">
-        <h1 class="card-title fs-5"><%= form_tittle %></h1>
+        <h1 class="card-title fs-5">Actualizar Egresado</h1>
     </div>
     <div class="card-body">
-        <form id="actualizarEgresadoform" action="/actualizarEgresado" method="POST" enctype="multipart/form-data">
+           <label  class="form-label">Buscar egresado a actualizar</label>
+           <input type="text" class="form-control" id="palabraClaveBuscar" onkeydown="filtrarUsuariosActualizarAction(event)">
+            <div class="justify-content-center" id="tablaFiltrarEgresadosActualizar">
+            <table class="table table-responsive table-striped table-hover" style= "--bs-table-striped-bg: #bdecb6;">
+                <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Correo</th>
+                </tr>
+                </thead>
+                <tbody  id="egresadosactualizarfiltrados">
+                <!-- Aquí van las filas de la tabla, las cuales se llenan con javaScript -->
+                </tbody>
+            </table>
+
+            </div>
+
+
+        <form id="actualizarEgresadoform" action="/actualizarEgresado" method="POST" enctype="multipart/form-data" style="display:none;">
             
             <div class="mb-3">
                 <label for="email" class="form-label">Correo Electrónico del graduado a modificar</label>
-                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+                <input type="email" class="form-control" id="emailActualizar" name="email" aria-describedby="emailHelp">
             </div>
             <div class="mb-3">
                 <label for="nombres" class="form-label">Nombres</label>
-                <input id="nombres" name="nombres" type="text" class="form-control">
+                <input id="nombresActualizar" name="nombres" type="text" class="form-control">
             </div>
             <div class="mb-3">
                 <label for="apellidos" class="form-label">Apellidos</label>
-                <input id="apellidos" name="apellidos" type="text" class="form-control">
+                <input id="apellidosActualizar" name="apellidos" type="text" class="form-control">
             </div>
             <div class="mb-3">
                 <label for="direccion" class="form-label">Dirección de Recidencia</label>
-                <input id="direccion" name="direccion" type="text" class="form-control">
+                <input id="direccionActualizar" name="direccion" type="text" class="form-control">
             </div>
             <div class="mb-3">
                 <label for="cell" class="form-label">Telefono del Graduado</label>
-                <input id="cell" name="cell" type="text" class="form-control">
+                <input id="cellActualizar" name="cell" type="text" class="form-control">
             </div>
             <div class="mb-3">
                 <label for="empresa" class="form-label">Empresa actual donde Labora</label>
-                <input id="empresa" name="empresa" type="text" class="form-control">
+                <input id="empresaActualizar" name="empresa" type="text" class="form-control">
             </div>
             <div class="mb-3">
                 <label for="cargo" class="form-label">Cargo que ocupa en la Empresa</label>
-                <input id="cargo" name="cargo" type="text" class="form-control">
+                <input id="cargoActualizar" name="cargo" type="text" class="form-control">
             </div>
             <div class="mb-3">
                 <label for="pais">País de Recidencia</label>
@@ -64,15 +83,15 @@
             </div>
             <div class="mb-3">
                 <label for="coord_x" class="form-label">Coordenada X</label>
-                <input id="coord_x" name="coord_x" type="text" class="form-control">
+                <input id="coord_xActualizar" name="coord_x" type="text" class="form-control">
             </div>
             <div class="mb-3">
                 <label for="coord_y" class="form-label">Coordenada Y</label>
-                <input id="coord_y" name="coord_y" type="text" class="form-control">
+                <input id="coord_yActualizar" name="coord_y" type="text" class="form-control">
             </div>
             <div class="mb-3">
                 <label for="portafolio_url" class="form-label">URL de Portafolio | Página Web</label>
-                <input id="portafolio_url" name="portafolio_url" type="text" class="form-control">
+                <input id="portafolio_urlActualizar" name="portafolio_url" type="text" class="form-control">
             </div>
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="1" id="datos_publicos" name="datos_publicos">

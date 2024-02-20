@@ -48,6 +48,12 @@
                 Exportar Datos a CSV
               </a>
             </li>
+            <br>
+            <li>
+              <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importarDatosExcelModal" style="margin-bottom: 20px;">
+                Importar Datos de un excel 
+              </a>
+            </li>
             <% } %>
         </ul>
 
@@ -152,6 +158,20 @@
               </div>
               <div class="modal-body">
                 <%- include ('../partials/egresadoborrar.ejs') %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="importarDatosExcelModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+          aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Importar Datos de un excel</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <%- include ('../partials/importarDatosExcelModal.ejs') %>
               </div>
             </div>
           </div>
