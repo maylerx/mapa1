@@ -7,7 +7,7 @@ exports.datosEgresados = async (req, res) => {
         const query = `
             SELECT e.nombres, e.apellidos, e.direccion, e.pais, e.departamento, e.ciudad, e.cell, e.empresa, e.cargo,
                 e.email, e.year_graduacion, cc.nombre AS carrera_cursada,
-                e.imagen_url, e.portafolio_url, e.coord_x, e.coord_y
+                e.imagen_url, e.portafolio_url, e.coord_x, e.coord_y, e.id
             FROM egresados e
             JOIN carrera_cursada cc ON e.carrera_cursada_id = cc.id
         `;

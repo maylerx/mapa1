@@ -1,14 +1,29 @@
 <div class="card">
     <div class="card-header">
-        <h1 class="card-title fs-5">Borrar</h1>
+        <h1 class="card-title fs-5">Filtrar egresado</h1>
     </div>
     <div class="card-body">
         <form>
             <div class="mb-3">
                 <label for="" class="form-label">Escriba una palabra Clave</label>
                 <input type="text" class="form-control" id="palabraClaveBuscar" onkeydown="buscarPorPalabraClaveAction(event)">
-                <div class="form-control" id="egresadosEncontrados">
-                    
+
+
+                <div class="justify-content-center">
+                <table class="table table-responsive table-striped table-hover" style= "--bs-table-striped-bg: #bdecb6;">
+                 <thead>
+                    <tr>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Apellido</th>
+                      <th scope="col">Teléfono</th>
+                      <th scope="col">Correo</th>
+                      <th scope="col">Mostrar en mapa</th>
+                    </tr>
+                 </thead>
+                 <tbody  id="egresadosEncontrados">
+                    <!-- Aquí van las filas de la tabla, las cuales se cargan con javaScript -->
+                 </tbody>
+                </table>
 
                 </div>
             </div>

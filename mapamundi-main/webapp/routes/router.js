@@ -16,9 +16,10 @@ router.get('/login', (req, res)=>{
 router.get('/register', (req, res)=>{
     res.render('pages/register', {alert:false})
 })
-
 //router para los métodos del controller
 router.post('/register', authController.register)
+//permite subir un excel con la informacion de los egresados para importartlos
+router.post('/importarEgresadosExcel', authController.importarEgresadosExcel)
 router.post('/login', authController.login)
 router.post('/agregarEgresado', mapController.agregarEgresado)
 //router.post('/borrarEgresado',authController.isAuthenticated, (rec, res)=>{
@@ -30,5 +31,7 @@ router.post('/actualizarEgresado',mapController.actualizarEgresado)
 router.get('/logout', authController.logout)
 router.get('/datosEgresados', checkRoleMiddleware, mapController.datosEgresados);
 router.get('/exportar', exportController.exportar);
+//permite descargar la plantilla.ods para una futura importacion de egresados
+router.get('/downloadTemplate', exportController.downloadTemplate);
 
 module.exports = router

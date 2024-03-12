@@ -1,7 +1,88 @@
 const jwt = require('jsonwebtoken')
 const bcryptjs = require('bcryptjs')
+
+const xlsx = require('xlsx');
 const conexion = require('../database/db')
 const { promisify } = require('util')
+
+
+// Funcion de registro de usuarios (Todos con rol usuario)
+exports.importarEgresadosExcel = async (req, res) => {
+    try {
+        const workbook = xlsx.readFile(req.files.file.tempFilePath, { type: 'buffer' });
+        const sheetName = workbook.SheetNames[0]; // Asume que quieres leer la primera hoja
+        const worksheet = workbook.Sheets[sheetName];
+        // Obtener el valor de la celda A15
+        var filaActual = 16
+        var errorMessages = "";
+        while( worksheet['A'+filaActual] != null){
+            try{
+                const egresado = {};
+                egresado['nombres'] = worksheet['A'+filaActual].v;
+                egresado['apellidos'] = worksheet['B'+filaActual].v;
+                egresado['direccion'] = worksheet['C'+filaActual].v;
+                egresado['cell'] = worksheet['D'+filaActual].v;
+                egresado['empresa'] = worksheet['E'+filaActual].v;
+                egresado['cargo'] = worksheet['F'+filaActual].v;
+                egresado['ciudad'] = worksheet['G'+filaActual].v;
+                egresado['departamento'] = worksheet['H'+filaActual].v;
+                egresado['pais'] = worksheet['I'+filaActual].v;
+                egresado['email'] = worksheet['J'+filaActual].v;
+                egresado['year_graduacion'] = worksheet['K'+filaActual].v;
+                egresado['coord_x'] = worksheet['L'+filaActual].v;
+                egresado['coord_y'] = worksheet['M'+filaActual].v;
+                egresado['datos_publicos'] = true;
+                egresado['portafolio_url'] = worksheet['N'+filaActual].v;
+                egresado['carrera_cursada_id'] =  await obtener_id_carrera_cursada( worksheet['O'+filaActual].v);
+                //aqui se pueden agregar mas campos, dependiendo del excel (si se agregan otros campos etc)
+                await insertar_egresado_importacion(egresado);
+
+            }catch (error){
+                errorMessages += ' fila : '+filaActual+' causa de error :' +error.message + '\n';
+            }finally{
+                filaActual++;
+            }
+        }
+       if(errorMessages.length === 0  ){
+            res.json({ message: 'Archivo subido exitosamente' });
+        }
+        else {
+            res.json({ message: 'No todos los egresados se subieron exitosamente, las filas sin subir son: \n' + errorMessages });
+        }
+        
+    } catch (error) {
+            console.log(error)
+    }
+}
+
+//funcion que inserta un egresado a la base de datos
+async function insertar_egresado_importacion(egresado){
+ await new Promise((resolve, reject) => {
+    conexion.query('INSERT INTO egresados SET ?', egresado,  async (error, results) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve();
+                }
+            });
+        });
+}
+
+//funcion que obtiene el id de una carrera cursada usando el nombre
+async function obtener_id_carrera_cursada(nombre_carrera){
+        var id = -1;
+        await new Promise((resolve, reject) => {
+            conexion.query('select id from carrera_cursada where nombre = ? ', nombre_carrera, (error, results) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    id = results[0].id;
+                    resolve();
+                }
+            });
+        });
+        return id;
+}
 
 // Funcion de registro de usuarios (Todos con rol usuario)
 exports.register = async (req, res) => {
