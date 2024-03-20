@@ -7,7 +7,7 @@ exports.datosEgresados = async (req, res) => {
         const query = `
             SELECT e.nombres, e.apellidos, e.direccion, e.pais, e.departamento, e.ciudad, e.cell, e.empresa, e.cargo,
                 e.email, e.year_graduacion, cc.nombre AS carrera_cursada,
-                e.imagen_url, e.portafolio_url, e.coord_x, e.coord_y, e.id
+                e.imagen_url, e.portafolio_url, e.coord_x, e.coord_y, e.id, e.aptitudes
             FROM egresados e
             JOIN carrera_cursada cc ON e.carrera_cursada_id = cc.id
         `;
@@ -125,10 +125,10 @@ exports.borrarEgresado = async (req, res) => {
     try {
         const { nombres, apellidos, direccion, pais, departamento,
             ciudad, cell, empresa, cargo, email, year, carrera_cursada, portafolio_url,
-            coord_x, coord_y } = req.body;
+            coord_x, coord_y,aptitudes } = req.body;
         console.log(req.body);
         if (!nombres || !apellidos || !coord_x || !coord_y || !email
-            || !direccion || !pais || !departamento || !ciudad || !cell || !empresa || !cargo
+            || !direccion || !pais || !aptitudes|| !departamento || !ciudad || !cell || !empresa || !cargo
             || !year || !carrera_cursada || !portafolio_url
             || req.files.imagen === null) {
             console.log("Advertencia: Ingresar el correo electronico");
@@ -166,6 +166,7 @@ exports.borrarEgresado = async (req, res) => {
                 carrera_cursada_id: carrera_cursada,
                 portafolio_url: portafolio_url,
                 datos_publicos: req.body.datos_publicos === "1" ? 1 : 0,
+                aptitudes:aptitudes
             }, email], (error) => {
                 if (error) {
                     res.json(error);
@@ -228,11 +229,11 @@ exports.agregarEgresado = async (req, res) => {
     try {
         const { nombres, apellidos, direccion, pais, departamento,
                 ciudad, cell, empresa, cargo, email, year, carrera_cursada, portafolio_url,
-                coord_x, coord_y } = req.body;
+                coord_x, coord_y,aptitudes } = req.body;
         console.log(req.body);
         if (!nombres || !apellidos || !coord_x || !coord_y || !email
             || !direccion || !pais || !departamento || !ciudad || !cell || !empresa || !cargo
-            || !year || !carrera_cursada || !portafolio_url
+            || !year || !carrera_cursada || !aptitudes || !portafolio_url
             || req.files.imagen === null) {
             console.log("Advertencia: Ingresar todos los campos");
             res.json({
@@ -270,6 +271,7 @@ exports.agregarEgresado = async (req, res) => {
                 carrera_cursada_id: carrera_cursada,
                 portafolio_url: portafolio_url,
                 datos_publicos: req.body.datos_publicos === "1" ? 1 : 0,
+                aptitudes: aptitudes
             }, (error) => {
                 if (error) {
                     res.json({
