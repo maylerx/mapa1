@@ -58,7 +58,8 @@ function obtenerNombreUbicacionPorId(tipo, id) {
 exports.borrarEgresado = async (req, res) => {
     try {
         const {email} = req.body;
-        if (!email == null) {
+        
+        if (!email == null  || email==="") {
             res.json({
             alert: true,
             alertTitle: "Advertencia",

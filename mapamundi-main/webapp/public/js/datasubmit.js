@@ -19,7 +19,8 @@ $(document).ready(function () {
                         showConfirmButton: data.showConfirmButton,
                         timer: data.timer
                     }).then(() => {
-                        window.location = '/' + data.ruta;
+                        if(data.ruta.length !=0)
+                            window.location = '/' + data.ruta;
                     });
                 }
             },
@@ -50,7 +51,8 @@ $(document).ready(function () {
                         showConfirmButton: data.showConfirmButton,
                         timer: data.timer
                     }).then(() => {
-                        window.location = '/' + data.ruta;
+                        if(data.ruta.length !=0)
+                            window.location = '/' + data.ruta;
                     });
                 }
             },
@@ -81,7 +83,8 @@ $(document).ready(function () {
                         showConfirmButton: data.showConfirmButton,
                         timer: data.timer
                     }).then(() => {
-                        window.location = '/' + data.ruta;
+                        if(data.ruta.length !=0)
+                            window.location = '/' + data.ruta;
                     });
                 }
             },

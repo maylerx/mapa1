@@ -34,6 +34,7 @@ exports.importarEgresadosExcel = async (req, res) => {
                 egresado['datos_publicos'] = true;
                 egresado['portafolio_url'] = worksheet['N'+filaActual].v;
                 egresado['carrera_cursada_id'] =  await obtener_id_carrera_cursada( worksheet['O'+filaActual].v);
+                egresado['aptitudes'] =  worksheet['P'+filaActual].v;
                 //aqui se pueden agregar mas campos, dependiendo del excel (si se agregan otros campos etc)
                 await insertar_egresado_importacion(egresado);
 
