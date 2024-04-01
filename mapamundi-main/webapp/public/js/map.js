@@ -35,6 +35,7 @@ pinesEgresados().then((egresados) => {
                 '<br><strong>Año de Graduación: </strong>'+ egresado.year_graduacion +
                 '<br><strong>Carrera Cursada: </strong>'+ egresado.carrera_cursada +
                 '<br><strong>Portafolio: </strong><a href="'+egresado.portafolio_url+'">'+ egresado.portafolio_url +
+                '<br><strong>Aptitudes:  </strong>'+ egresado.aptitudes +
                 '</a><br><br><div style="text-align: center;"><img src="' 
                 + egresado.imagen_url + 
                 '" alt="La foto de usuario no está disponible y sólo la pueden observar los administradores" '+
@@ -73,9 +74,11 @@ function buscarPorPalabraClave(palabraClave,selectId){
         let egresadosEncontrados = []
         var encontrado = false;
         egresados.forEach((egresado) => {
+            console.log(egresado);
             if ((egresado.email).toLowerCase().replace(/\s/g, '') === palabraClave.toLowerCase().replace(/\s/g, '')
             || (egresado.nombres).toLowerCase().replace(/\s/g, '') === palabraClave.toLowerCase().replace(/\s/g, '')
-            || (egresado.apellidos).toLowerCase().replace(/\s/g, '') === palabraClave.toLowerCase().replace(/\s/g, '')) {
+            || (egresado.apellidos).toLowerCase().replace(/\s/g, '') === palabraClave.toLowerCase().replace(/\s/g, '')
+            || (egresado.aptitudes != null && egresado.aptitudes.includes(palabraClave))) {
                 egresadosEncontrados.push(egresado);
                 encontrado = true;
             }
@@ -154,6 +157,8 @@ function seleccionarEgresadoActualizar(egresadoInfo){
     $("#coord_xActualizar").val(egresadoInfo.coord_x);
     $("#coord_yActualizar").val(egresadoInfo.coord_y);
     $("#portafolio_urlActualizar").val(egresadoInfo.portafolio_url);
+    $("#aptitudesActualizar").val(egresadoInfo.aptitudes);
+    
 
 }
 
